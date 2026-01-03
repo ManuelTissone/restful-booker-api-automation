@@ -1,0 +1,42 @@
+Pregunta 1 - Conceptual:
+¿Cuál es la diferencia fundamental entre UI testing (OrangeHRM) y API testing (Restful-booker)? Pensá en qué herramientas usás y qué validás en cada uno.
+
+1 en UI testing se testea un flujo en particular que puede llegar a hacer el usuario en el frontend por eso en los test de UI podemos encontrar una layer de PAGES donde cada uno de los archivos page representa una pagina en particular por ej. login.page o admin.page , mientras que en API testing lo que hacemos es testear las respuestas de las REQUEST, las request son maneras de comunicarse con lo que seria la base de datos pueden ser POST, PUT, GET, DELETE validando mediante el response body que la API nos entrega28 dicExcelente respuesta. Captaste los conceptos clave.
+Pequeña corrección técnica:
+Dijiste "comunicarse con la base de datos" - no exactamente. Las requests se comunican con el servidor/backend, que a su vez puede interactuar con la base de datos.
+Flujo real:
+
+Tu test → API (servidor) → Base de datos
+No accedés directamente a la BD, sino a través de la API
+
+Pregunta 2:
+
+En tu primer test, hiciste un POST a /booking. ¿Qué tres cosas principales validaste en la respuesta para confirmar que la reserva se creó correctamente?
+
+2- Valide primordialmente que el status de la respuesta sea lo esperado segun el test (en este caso 200, sabiendo aun que en realidad un post espera un status 201 de created),  tambien valide el bookingid yluego la parte de responsebody con los datos de testData, osea los datos con los que cree el booking (expect: Esperando que en el responseBody se encuentren los datos de testData)
+
+
+Pregunta 3:
+¿Por qué estamos creando BookingService en vez de escribir todo el código directamente en el test? ¿Qué ventaja tiene?bookingService vendria a representar las PAGES de los test de UI. Aca es donde vamos a crear las clases (y sus metodos) que luego vamos a instanciar con diferentes atributos en los tests para hacer las requests. (Si crees que tengo que saber algo mas por favor indicame)28 dicCorrecto en la esencia, pero agregá estos puntos clave que son importantes para entrevistas técnicas:
+Ventajas específicas de usar Services:
+
+Reutilización de código - Si necesitás crear 10 reservas en diferentes tests, no repetís el mismo POST 10 veces
+Mantenibilidad - Si cambia el endpoint (ej: de /booking a /bookings), lo cambiás en UN solo lugar, no en 20 tests
+Separación de responsabilidades:
+
+Service: cómo hacer el request
+Test: qué validar en la respuesta
+
+
+Legibilidad - El test queda más limpio:
+
+typescript   // Sin service (repetitivo)
+   const response = await request.post('/booking', { data: bookingData });
+   
+   // Con service (claro)
+   const response = await bookingService.createBooking(bookingData);
+Esto es lo mismo que Page Object Model, aplicado a APIs.
+
+
+Pregunta 4:
+El bookingid se usa para construir endpoints que apuntan a esa reserva específica en operaciones futuras: GET /booking/5823, PUT /booking/5823, DELETE /booking/5823.

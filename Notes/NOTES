@@ -1,0 +1,23 @@
+Vamos a validar
+STATUS CODE (200, 201, etc)
+SCHEMAS (Estructura de respuesta)
+    que tenga campos esperados
+    que los tipos de datos sean correctos
+DATOS ESPECIFICOS
+    que firstname sea el que enviaste
+    que el totalprice coincida
+
+METODOS HTTP CRUD
+Create POST
+Read GET
+Update PUT
+Delete DELETE
+
+
+STATUS
+200 OK
+201 CREATED
+
+Primeros test cases: 
+TEST (url, {data:objeto})
+Carpetas: 
