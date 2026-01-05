@@ -45,7 +45,38 @@ restful-booker-api-automation/
 ├── package.json                 # Dependencies
 └── .gitignore                   # Excluded files
 ```
+## CI/CD Pipeline
 
+This project includes **automated testing with GitHub Actions** that runs on every push and pull request.
+
+### Pipeline Features
+
+**Automatic execution** - Tests run on every code change  
+**Branch protection** - Cannot merge to main if tests fail  
+**Test reports** - HTML reports saved as artifacts for 30 days  
+**Fast feedback** - Results available in ~2 minutes
+
+### How It Works
+```
+Developer pushes code
+        ↓
+GitHub Actions triggers
+        ↓
+Install dependencies (npm ci)
+        ↓
+Run all tests (npx playwright test)
+        ↓
+Tests pass → Allow merge
+Tests fail → Block merge
+```
+
+### Viewing Results
+
+1. Go to the **Actions** tab in the repository
+2. Click on the latest workflow run
+3. View test results and download HTML reports
+
+This ensures code quality and prevents broken tests from reaching the main branch.
 ## What the Tests Cover
 
 ### Test 1: Create Booking (POST)
