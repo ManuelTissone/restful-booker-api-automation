@@ -29,15 +29,15 @@ test('Delete booking by ID', async ({ request }) => {
     const authService = new AuthService(request);
     const authResponse = await authService.getToken(authData);
     const authBody = await authResponse.json(); //Parsear JSON
-    const token = authBody.token; //Guardar "token": "abc123... "
+    const token = authBody.token; 
     const bookingService = new BookingService(request);
     const postResponse = await bookingService.createBooking(bookingData);
     const responseBody = await postResponse.json();
     const bookingid = responseBody.bookingid;
     const deleteResponse = await bookingService.deleteBooking(bookingid, token);
-    expect(deleteResponse.status()).toBe(201);//Documentacion dice 200 pero en realidad 201 Created
+    expect(deleteResponse.status()).toBe(201);
     const getResponse = await bookingService.getBooking(bookingid);
-    expect(getResponse.status()).toBe(404);//DEVUELVE ERROR
+    expect(getResponse.status()).toBe(404);
 })
 test('Update booking by ID', async ({ request }) => {
     const authService = new AuthService(request);
